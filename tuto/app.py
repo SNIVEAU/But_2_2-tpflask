@@ -12,3 +12,4 @@ from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = (
 'sqlite:///'+mkpath('../myapp.db'))
 db = SQLAlchemy(app)
+app. config['SECRET_KEY']="9d088f4d-de8b-449b-9c8a-4f3551a578cd"
