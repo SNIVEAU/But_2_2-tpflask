@@ -1,9 +1,8 @@
-
 {% extends "base.html" %}
 {% block main %}
-<h1>Edit author: {{ author.name }}</h1>
+<h1>Ajouter un auteur</h1>
 <form role="form" method="POST"
-action="{{ url_for('save_author') }}">
+action="{{url_for('create_author')}}">
 {{ form.hidden_tag() }}
 <div class=
 {% if form.name.errors %}
@@ -22,6 +21,6 @@ class_="form-control") }}
 {% endfor %}
 </ul>
 {% endif %}
+
 <input class="btn btn-default" type="submit" value="Enregistrer">
-</form>
-{% endblock %}
+{%endblock%}

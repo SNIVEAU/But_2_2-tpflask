@@ -31,3 +31,29 @@ def loaddb(filename):
         author_id = a.id)
         db.session.add(o)
     db.session.commit()
+@app.cli.command()
+def syncdb():
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+@app.cli.command()
+@click.argument('username')
+@click.argument('password')
+def newuser(username, password):
+    from .models import User
+    from hashlib import sha256
+    m=sha256()
+    m.update(password.encode('utf-8'))
+    u=User(username=username, password=m.hexdigest())
+    db.session.add(u)
+    db.session.commit()
+@app.cli.command()
+def passwd(username, password):
+    from .models import User
+    u = User.query.filter_by(username=username).first()
+    from hashlib import sha256
+    m=sha256()
+    m.update(password.encode('utf-8'))
+    u.password = m.hexdigest()
+    db.session.commit()
+

@@ -13,3 +13,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 'sqlite:///'+mkpath('../myapp.db'))
 db = SQLAlchemy(app)
 app. config['SECRET_KEY']="9d088f4d-de8b-449b-9c8a-4f3551a578cd"
+from flask_login import LoginManager, AnonymousUserMixin
+# Initialisation de Flask-Login
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+# login_manager.anonymous_user = AnonymousUserMixin
