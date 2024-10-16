@@ -13,7 +13,7 @@
         <title>{{ title }}</title>
         {% endblock %}
         <link rel="stylesheet"
-        href="{{ url_for('static', filename='home.css') }}">
+        href="{{ url_for('static', filename='base.css') }}">
     </head>
 
     <body>
@@ -21,6 +21,11 @@
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <div class="container-fluid">
                   <a class="navbar-brand" href={{ url_for('home') }}>My Books</a>
+                  <form action="{{ url_for('search') }}" method="get">
+                    <input type="text" name="query" placeholder="Rechercher un livre..." required>
+                    <button type="submit">Recherche</button>
+                </form>
+                
                   <button class="navbar-toggler" type="button" 
   data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
   aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle 
@@ -34,17 +39,22 @@
   href="#">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href={{url_for('books')}}>Livres</a>
                       </li>
+                      {%if not current_user.is_authenticated %}
                       <li class="nav-item">
                         <a class="nav-link" href={{ url_for('login') }} >Login</a>
                       </li>
+                      {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                       
                       {% if current_user.is_authenticated %}
                       <li><a class="nav-link text-white">{{ current_user.username }}</a></li>
                       <li><a class="nav-link text-white" href="{{ url_for('logout')}}"> Se déconnecter</a></li>
+                      {% endif %}
+                      {% if current_user.is_admin %}
+                      <li><a class="nav-link text-white" href="{{ url_for('new_book')}}"> Ajouter un livre</a></li>
                       {% endif %}
                       </ul>
                   </div>

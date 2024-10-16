@@ -10,7 +10,9 @@ def loaddb(filename):
     import yaml
     books = yaml.safe_load(open(filename))
     # import des modèles
-    from .models import Author, Book
+    from .models import Author, Book, User
+    from hashlib import sha256
+
     # première passe: création de tous les auteurs
     authors = {}
     for b in books:
@@ -30,6 +32,10 @@ def loaddb(filename):
         img = b["img"] ,
         author_id = a.id)
         db.session.add(o)
+    m=sha256()
+    m.update("test".encode('utf-8'))
+    useradmin = User(username="test", password=m.hexdigest(), admin=True)
+    db.session.add(useradmin)
     db.session.commit()
 @app.cli.command()
 def syncdb():

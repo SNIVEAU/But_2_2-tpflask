@@ -22,8 +22,11 @@ def home():
     return render_template("home.html",title="My Books!",books = get_sample(),current_user=current_user)
 @app.route("/detail/<id>")
 def detail(id):
-    books = get_sample()
+    books = get_books()
+    print(books)
+    print(len(books))
     book = books[int(id)-1]
+    print(book)
     return render_template(
         "detail.html",
         book=book)
@@ -79,7 +82,10 @@ def login():
     f = LoginForm()
     if not current_user.is_authenticated:
         f.next.data = request.args.get("next")
+    else:
+        return redirect(url_for("home"))
     user = None  # Initialisation de la variable user à None
+    
     if f.validate_on_submit():
         user = f.get_authenticated_user()
     if user:  # S'assurer que user est bien défini et non None
@@ -91,3 +97,36 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+@app.route("/books/")
+def books():
+    return render_template("books.html", books=get_books())
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    query = request.args.get('query', '')
+    books = get_recherche(query)
+    return render_template('search_results.html', books=books,query=query)
+class BookForm(FlaskForm):
+    price = StringField('Price', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    url = StringField('URL', validators=[DataRequired()])
+    img = StringField('Image', validators=[DataRequired()])
+    author_id = StringField('Author', validators=[DataRequired()])
+@app.route("/create/book/", methods=("POST",))
+def create_book():
+    f = BookForm()
+    if f.validate_on_submit():
+        b = Book(price=float(f.price.data),
+        title=f.title.data,
+        url=f.url.data,
+        img=f.img.data,
+        author_id=f.author_id.data)
+        db.session.add(b)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template("new-book.html", form=f)
+
+@app.route('/new/book/')
+def new_book():
+    f = BookForm()
+    return render_template("new-book.html", form=f)

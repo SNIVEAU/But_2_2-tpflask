@@ -1,0 +1,43 @@
+/* home.css */
+
+/* Style de la page de détail du livre */
+.container {
+    max-width: 600px; /* Largeur maximale pour le conteneur */
+    margin: 20px auto; /* Centre le conteneur avec une marge */
+    padding: 20px; /* Ajoute un espacement intérieur */
+    background-color: #ffffff; /* Fond blanc pour le conteneur */
+    border-radius: 8px; /* Coins arrondis pour un effet doux */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Ombre légère pour donner de la profondeur */
+}
+
+
+
+/* Style pour le titre du livre */
+.container h1 {
+    font-size: 24px; /* Taille de police du titre */
+    color: #343a40; /* Couleur sombre pour le titre */
+    margin: 10px 0; /* Espacement en haut et en bas */
+}
+
+/* Style pour le nom de l'auteur et le prix */
+.container p {
+    font-size: 18px; /* Taille de la police pour les paragraphes */
+    color: #495057; /* Couleur grise pour le texte */
+    margin: 5px 0; /* Espacement pour les paragraphes */
+}
+
+/* Style pour le lien de modification de l'auteur */
+.container a {
+    display: inline-block; /* Affiche le lien comme un bouton */
+    margin-top: 15px; /* Espace au-dessus du lien */
+    padding: 10px 15px; /* Espacement intérieur */
+    background-color: #007bff; /* Couleur du bouton */
+    color: white; /* Couleur du texte du lien */
+    text-decoration: none; /* Supprime le soulignement */
+    border-radius: 5px; /* Coins arrondis pour le bouton */
+    transition: background-color 0.3s; /* Transition pour le survol */
+}
+
+.container a:hover {
+    background-color: #0056b3; /* Couleur plus foncée au survol */
+}

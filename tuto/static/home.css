@@ -1,19 +1,92 @@
+/* home.css */
+
+/* Style du corps de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Couleur de fond douce */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style des titres */
 h1 {
-    color: red;
-}
-div.sample{
+    color: #343a40; /* Couleur sombre pour les titres */
     text-align: center;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-top: 20px;
 }
-main{
-    margin-top: 8em;
+
+/* Style de la barre de navigation */
+.navbar {
+    margin-bottom: 20px; /* Espace en bas de la navbar */
 }
-footer{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+
+/* Styles pour les liens de navigation */
+.nav-link {
+    color: white !important; /* Force la couleur blanche pour les liens */
 }
-main > .container {
-    padding: 60px 15px 0;
+
+.nav-link:hover {
+    color: #ffc107; /* Couleur dorée au survol */
+}
+
+/* Style du pied de page */
+.footer {
+    background-color: #e9ecef; /* Couleur de fond claire pour le footer */
+    padding: 20px; /* Espacement intérieur */
+}
+
+.footer .text-muted {
+    color: #6c757d; /* Couleur grise pour le texte du footer */
+}
+
+/* Ajustements pour le contenu principal */
+.container {
+    max-width: 960px; /* Largeur maximale pour le contenu */
+    margin: auto; /* Centre le contenu */
+}
+
+/* Style pour les éléments de liste dans la navbar */
+.navbar-nav li {
+    margin-right: 15px; /* Espace entre les éléments de liste */
+}
+
+/* Styles pour l'affichage des livres */
+.sample {
+    display: flex; /* Utilise flexbox pour la disposition */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+    justify-content: center; /* Centre les éléments horizontalement */
+    margin: 20px; /* Marge autour du conteneur */
+}
+
+.sample a {
+    text-decoration: none; /* Supprime le soulignement des liens */
+    margin: 15px; /* Marge autour de chaque livre */
+    text-align: center; /* Centre le texte sous les images */
+    color: #343a40; /* Couleur sombre pour le texte des titres */
+}
+
+.sample img {
+    width: 150px; /* Largeur fixe pour les images */
+    height: auto; /* Haute auto pour maintenir le ratio */
+    border-radius: 8px; /* Coins arrondis pour un effet plus doux */
+    transition: transform 0.2s; /* Animation douce au survol */
+}
+
+.sample img:hover {
+    transform: scale(1.05); /* Zoom léger sur l'image au survol */
+}
+
+.sample p {
+    margin-top: 5px; /* Espace entre l'image et le titre */
+    font-size: 16px; /* Taille de la police du titre */
+}
+
+/* Media queries pour la réactivité */
+@media (max-width: 768px) {
+    .sample img {
+        width: 100px; /* Réduit la taille des images sur les petits écrans */
+    }
+    .sample p {
+        font-size: 14px; /* Réduit la taille du texte sur les petits écrans */
+    }
 }
