@@ -90,3 +90,7 @@ h1 {
         font-size: 14px; /* Réduit la taille du texte sur les petits écrans */
     }
 }
+
+.BoutonSuppr{
+    justify-content: center;
+}

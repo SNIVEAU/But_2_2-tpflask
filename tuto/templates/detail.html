@@ -13,5 +13,6 @@
     <p>{{book.price}}</p>
     <a href="{{ url_for('edit_author', id=book.author_id) }}">Modifier l'auteur</a>
     <a href="{{book.url}}">Acheter le livre</a>
+    <a class ="supprimer" href="{{ url_for('remove_book', id=book.id )}}"> Supprimer le livre</a>
 </div>
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}">
+{% endblock %}
+{% block main %}
+<h1>Votre livre à bien été Supprimé</h1>
+<a class="d-flex" href="{{ url_for('books') }}">Retourner à la liste des livres</a>
+{% endblock %}
