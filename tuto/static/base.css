@@ -1,10 +1,8 @@
 
-/* Style du corps de la page */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa; /* Couleur de fond douce */
-    margin: 0;
-    padding-top: 5%;
+    padding-top: 10%;
 }
 
 /* Style des titres */

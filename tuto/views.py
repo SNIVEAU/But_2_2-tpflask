@@ -3,13 +3,13 @@ from flask import render_template
 from .models import *
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
-from wtforms . validators import DataRequired
 from flask import url_for, redirect
-from wtforms import PasswordField
+from wtforms import PasswordField, SubmitField
 from .models import User
 from hashlib import sha256
 from flask_login import login_user , current_user, logout_user, AnonymousUserMixin, login_required
 from flask import request
+from wtforms.validators import DataRequired, Email, EqualTo
 # print(data[0])
 
 class AuthorForm ( FlaskForm ):
@@ -151,17 +151,37 @@ def new_book():
     f = BookForm()
     return render_template("new-book.html", form=f)
 
+@app.route("/remove/book/", methods=["GET", "POST"])
+def remove_author():
+    f = BookForm()  # Assurez-vous que ce formulaire existe, sinon il faut le définir
+    if f.validate_on_submit():
+        # Ajoutez ici la logique pour supprimer l'auteur (par exemple, en utilisant l'ID ou le nom de l'auteur)
+        #book = Book.query.filter_by(id=f.title).first()
+        #db.session.delete(book)
+        #db.session.commit()
+        return redirect(url_for('home'))  # Redirigez vers une autre page après suppression
+    return render_template("remove-book.html", form=f)
 
 
-@app.route('/remove/book/<id>', methods=['GET', 'POST'])
-def remove_book(id):
-    book = Book.query.get(id)
-    db.session.delete(book)
-    db.session.commit()
-    return redirect(url_for('supprimer'))
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+
+
+@app.route("/register/", methods=("GET", "POST"))
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = sha256()
+        hashed_password.update(form.password.data.encode())
+        new_user = User(username=form.username.data, password=hashed_password.hexdigest(), admin=False)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for("login"))  
+    return render_template("register.html", form=form)
 
 @app.route('/supprimer/')
 def supprimer():
     return render_template("supprimer.html")
-
-
