@@ -20,6 +20,7 @@ def home():
     print(current_user)
     print(current_user.is_authenticated)
     return render_template("home.html",title="My Books!",books = get_sample(),current_user=current_user)
+
 @app.route("/detail/<id>")
 def detail(id):
     books = get_books()
@@ -30,6 +31,8 @@ def detail(id):
     return render_template(
         "detail.html",
         book=book)
+
+
 @app.route("/edit/author/<int:id>")
 @login_required
 def edit_author(id):
@@ -38,6 +41,8 @@ def edit_author(id):
     return render_template(
     "edit-author.html",
     author=a, form=f)
+
+
 @app.route("/save/author/", methods=("POST",))
 def save_author():
     a = None
@@ -52,10 +57,16 @@ def save_author():
     return render_template(
     "edit-author.html",
     author=a, form=f)
+
+
+
 @app.route("/new/author/")
 def new_author():
     f= AuthorForm()
     return render_template("new-author.html" ,form=f)
+
+
+
 @app.route("/create/author/", methods=("POST",))
 def create_author():
     f = AuthorForm()
@@ -65,6 +76,8 @@ def create_author():
         db.session.commit()
         return redirect(url_for('home'))
     return render_template("new-author.html", form=f)
+
+
 class LoginForm ( FlaskForm ):
     username = StringField('Username')
     password = PasswordField('Password')
@@ -77,6 +90,8 @@ class LoginForm ( FlaskForm ):
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
         return user if passwd == user.password else None
+    
+
 @app.route("/login/", methods=("GET", "POST"))
 def login():
     f = LoginForm()
@@ -101,6 +116,8 @@ def logout():
 @app.route("/books/")
 def books():
     return render_template("books.html", books=get_books())
+
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     query = request.args.get('query', '')
@@ -112,6 +129,8 @@ class BookForm(FlaskForm):
     url = StringField('URL', validators=[DataRequired()])
     img = StringField('Image', validators=[DataRequired()])
     author_id = StringField('Author', validators=[DataRequired()])
+
+
 @app.route("/create/book/", methods=("POST",))
 def create_book():
     f = BookForm()
@@ -130,3 +149,14 @@ def create_book():
 def new_book():
     f = BookForm()
     return render_template("new-book.html", form=f)
+
+@app.route("/remove/book/", methods=["GET", "POST"])
+def remove_author():
+    f = BookForm()  # Assurez-vous que ce formulaire existe, sinon il faut le définir
+    if f.validate_on_submit():
+        # Ajoutez ici la logique pour supprimer l'auteur (par exemple, en utilisant l'ID ou le nom de l'auteur)
+        #book = Book.query.filter_by(id=f.title).first()
+        #db.session.delete(book)
+        #db.session.commit()
+        return redirect(url_for('home'))  # Redirigez vers une autre page après suppression
+    return render_template("remove-book.html", form=f)

@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% block styles %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', 
-filename='home.css')}}">
-<link rel="stylesheet" href="{{ url_for('static',
-filename='detail.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='detail.css')}}">
 {% endblock %}
 {% block main %}
 <div class="container">
+    <h1>{{book.title}}</h1>
     <img src="{{ url_for('static', filename='images/'+book.img)
     }}" alt="{{book.title}}" title="{{book.title}}">
-    <h1>{{book.title}}</h1>
     <p>{{book.author}}</p>
     <p>{{book.price}}</p>
     <a href="{{ url_for('edit_author', id=book.author_id) }}">Modifier l'auteur</a>

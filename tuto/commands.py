@@ -37,14 +37,18 @@ def loaddb(filename):
     useradmin = User(username="test", password=m.hexdigest(), admin=True)
     db.session.add(useradmin)
     db.session.commit()
+
+
 @app.cli.command()
 def syncdb():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
 @app.cli.command()
 @click.argument('username')
 @click.argument('password')
+
 def newuser(username, password):
     from .models import User
     from hashlib import sha256
@@ -53,6 +57,9 @@ def newuser(username, password):
     u=User(username=username, password=m.hexdigest())
     db.session.add(u)
     db.session.commit()
+
+@app.cli.command()
+
 @app.cli.command()
 def passwd(username, password):
     from .models import User

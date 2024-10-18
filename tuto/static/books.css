@@ -34,3 +34,9 @@ body {
     font-weight: bold; /* Met en gras le titre */
     color: #555; /* Couleur du titre */
 }
+
+div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centre les éléments horizontalement */
+}

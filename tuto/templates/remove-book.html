@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Supprimer un livre</h1>
+<form role="form" method="POST" action="{{ url_for('remove_author') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.title.label }}
+        {{ form.title(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+</form>
+{% endblock %}
