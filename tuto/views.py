@@ -123,6 +123,7 @@ def search():
     query = request.args.get('query', '')
     books = get_recherche(query)
     return render_template('search_results.html', books=books,query=query)
+
 class BookForm(FlaskForm):
     price = StringField('Price', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
@@ -180,3 +181,7 @@ def register():
         db.session.commit()
         return redirect(url_for("login"))  
     return render_template("register.html", form=form)
+
+@app.route('/supprimer/')
+def supprimer():
+    return render_template("supprimer.html")

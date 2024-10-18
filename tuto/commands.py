@@ -58,7 +58,6 @@ def newuser(username, password):
     db.session.add(u)
     db.session.commit()
 
-@app.cli.command()
 
 @app.cli.command()
 def passwd(username, password):
