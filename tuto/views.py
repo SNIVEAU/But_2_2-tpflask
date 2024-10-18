@@ -151,16 +151,13 @@ def new_book():
     f = BookForm()
     return render_template("new-book.html", form=f)
 
-@app.route("/remove/book/", methods=["GET", "POST"])
-def remove_author():
-    f = BookForm()  # Assurez-vous que ce formulaire existe, sinon il faut le définir
-    if f.validate_on_submit():
-        # Ajoutez ici la logique pour supprimer l'auteur (par exemple, en utilisant l'ID ou le nom de l'auteur)
-        #book = Book.query.filter_by(id=f.title).first()
-        #db.session.delete(book)
-        #db.session.commit()
-        return redirect(url_for('home'))  # Redirigez vers une autre page après suppression
-    return render_template("remove-book.html", form=f)
+@app.route('/remove/book/<id>', methods=['GET', 'POST'])
+def remove_book(id):
+    book = Book.query.get(id)
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('supprimer'))
+
 
 
 class RegistrationForm(FlaskForm):
