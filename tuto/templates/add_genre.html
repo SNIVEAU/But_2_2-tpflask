@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Genre</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Inclure votre CSS ici -->
+</head>
+<body>
+    <h1>Ajouter un Nouveau Genre</h1>
+
+    {% if message %}
+        <div class="message {% if message_type %}{{ message_type }}{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    <form action="{{ url_for('add_genre') }}" method="POST">
+        <label for="name">Nom du Genre:</label>
+        <input type="text" id="name" name="name" placeholder="Entrez le nom du genre" required>
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>

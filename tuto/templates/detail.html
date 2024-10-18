@@ -11,6 +11,13 @@
     }}" alt="{{book.title}}" title="{{book.title}}">
     <p>{{book.author}}</p>
     <p>{{book.price}}</p>
+    {% for g in genres %}
+    <p>{{g.name}}</p>
+    {% endfor %}
+    <h2>Ajouter un genre</h2>
+    <a href="{{ url_for('select_genre_for_book', book_id=book.id) }}">
+        <button>Choisir un genre à ajouter</button>
+    </a>
     <a href="{{ url_for('edit_author', id=book.author_id) }}">Modifier l'auteur</a>
     <a href="{{book.url}}">Acheter le livre</a>
     <a class ="supprimer" href="{{ url_for('remove_book', id=book.id )}}"> Supprimer le livre</a>

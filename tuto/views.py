@@ -1,5 +1,5 @@
 from.app import app
-from flask import render_template
+from flask import render_template, flash
 from .models import *
 from flask_wtf import FlaskForm
 from wtforms import StringField , HiddenField
@@ -28,9 +28,12 @@ def detail(id):
     print(len(books))
     book = books[int(id)-1]
     print(book)
+    genres = Appartient.get_genre_by_books(book.id)
+    listegenre =[genre.genre for genre in genres]
+    print(listegenre)
     return render_template(
         "detail.html",
-        book=book)
+        book=book,genres=listegenre)
 
 
 @app.route("/edit/author/<int:id>")
@@ -182,3 +185,47 @@ def register():
 @app.route('/supprimer/')
 def supprimer():
     return render_template("supprimer.html")
+
+@app.route('/add_genre', methods=['GET', 'POST'])
+def add_genre():
+    if request.method == 'POST':
+        genre_name = request.form.get('name')  
+        if genre_name:
+            existing_genre = Genre.query.filter_by(name=genre_name).first()
+            if existing_genre:
+                flash('Le genre existe déjà.', 'error')
+            else:
+                new_genre = Genre(name=genre_name)
+                db.session.add(new_genre)
+                db.session.commit()
+                flash('Genre ajouté avec succès!', 'success')
+                return redirect(url_for('all_genres'))  
+        else:
+            flash('Le nom du genre ne peut pas être vide.', 'error')
+    
+    return render_template('add_genre.html')
+
+
+@app.route('/genres')
+def all_genres():
+    genres = Genre.query.all()  
+    return render_template('genres.html', genres=genres)
+
+@app.route('/select_genre_for_book/<int:book_id>', methods=['GET'])
+def select_genre_for_book(book_id):
+    book = Book.query.get_or_404(book_id)  
+    genres = Genre.query.all()  
+    return render_template('select_genre.html', book=book, genres=genres)
+
+@app.route('/add_genre_to_book/<int:book_id>/<int:genre_id>', methods=['GET'])
+def add_genre_to_book(book_id, genre_id):
+    existing_association = Appartient.query.filter_by(book_id=book_id, genre_id=genre_id).first()
+    if existing_association:
+        flash('Ce genre est déjà associé à ce livre.', 'error')
+    else:
+        new_association = Appartient(book_id=book_id, genre_id=genre_id)
+        db.session.add(new_association)
+        db.session.commit()
+        flash('Genre ajouté avec succès!', 'success')
+    
+    return redirect(url_for('detail', id=book_id))

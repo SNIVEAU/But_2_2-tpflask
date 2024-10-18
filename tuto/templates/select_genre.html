@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='genres.css')}}">
+{% endblock %}
+{% block main %}
+<div class="container">
+    <h1>Ajouter un genre à {{ book.title }}</h1>
+    <ul>
+        {% for genre in genres %}
+        <li>
+            {{ genre.name }}
+            <a href="{{ url_for('add_genre_to_book', book_id=book.id, genre_id=genre.id) }}">
+                <button>Ajouter ce genre</button>
+            </a>
+        </li>
+        {% endfor %}
+        <a href="{{ url_for('add_genre') }}"> Ajouter un genre</a>
+    </ul>
+</div>
+{% endblock %}

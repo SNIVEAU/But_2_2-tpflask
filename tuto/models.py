@@ -7,17 +7,43 @@ class Author(db.Model):
     def __repr__(self):
         return self.name
     
+class Genre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    
+    def __repr__(self):
+        return "<Genre (%d) %s>" % (self.id, self.name)
+
+
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     price = db.Column(db.Float)
     title = db.Column(db.String(100))
     url = db.Column(db.String(100))
     img = db.Column(db.String(100))
+    
     author_id = db.Column(db.Integer, db.ForeignKey("author.id"))
-    author = db.relationship("Author",
-    backref=db.backref("books", lazy="dynamic"))
+    author = db.relationship("Author", backref=db.backref("books", lazy="dynamic"))
+
     def __repr__(self):
         return "<Book (%d) %s>" % (self.id, self.title)
+
+
+class Appartient(db.Model):
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), primary_key=True)
+    
+    book = db.relationship(Book, backref=db.backref('genres', lazy='dynamic'))
+    genre = db.relationship(Genre, backref=db.backref('books', lazy='dynamic'))
+
+    def __init__(self, book_id, genre_id):
+        self.book_id = book_id
+        self.genre_id = genre_id
+
+    def __repr__(self):
+        return "<Appartient: Book %d, Genre %d>" % (self.book_id, self.genre_id)
+    def get_genre_by_books(book_id):
+        return Appartient.query.filter_by(book_id=book_id).all()
 def get_sample():
     return Book.query.limit(10).all()
 def get_author(id):
